@@ -80,25 +80,35 @@ err_outage = abs(outage_ray-outage_theo)./max(outage_theo,eps)*100;
 
 %% 3. 绘图
 
-% 3.1 BER 曲线
-figure(1);
+% 3.1 BER (仅噪声环境)
+figure;
 semilogy(EbN0_dB, ber_awgn,'bo-', ...
-         EbN0_dB, ber_awgn_theo,'b-', ...
+         EbN0_dB, ber_awgn_theo,'b--', ...
+         EbN0_dB, ber_lap, 'rs-', ...
+         EbN0_dB, ber_lap_theo,'r--','LineWidth',1.4);
+grid on; xlabel('E_b/N_0 (dB)'); ylabel('BER');
+title('BER under AWGN and Laplacian Noise');
+legend({'AWGN Sim','AWGN Th.','Lap Sim','Lap Th.'},'Location','southwest');
+
+% 3.2 BER (含 Rayleigh 衰落)
+figure;
+semilogy(EbN0_dB, ber_awgn,'bo-', ...
+         EbN0_dB, ber_awgn_theo,'b--', ...
          EbN0_dB, ber_lap, 'rs-', ...
          EbN0_dB, ber_lap_theo,'r--', ...
          EbN0_dB, ber_ray, 'kd-', ...
          EbN0_dB, ber_ray_theo,'k--','LineWidth',1.4);
 grid on; xlabel('E_b/N_0 (dB)'); ylabel('BER');
-title('BPSK BER under AWGN, Laplacian and Rayleigh Channels (Level 3)');
+title('BER in AWGN, Laplacian and Rayleigh Channels (Level 3)');
 legend({'AWGN Sim','AWGN Th.','Lap Sim','Lap Th.','Ray Sim','Ray Th.'},...
        'Location','southwest');
 
-% 3.2 Outage Probability
-figure(2);
+% 3.3 Outage Probability
+figure;
 semilogy(EbN0_dB, outage_ray,'ms-','LineWidth',1.4); hold on;
 semilogy(EbN0_dB, outage_theo,'m--','LineWidth',1.4);
 grid on; xlabel('E_b/N_0 (dB)');
-ylabel(['Outage P  ( \gamma_{th} = ' num2str(th_SNRdB) ' dB )']);
+ylabel(['Outage P (\gamma_{th} = ' num2str(th_SNRdB) ' dB)']);
 title('Rayleigh Channel Outage Probability');
 legend({'Simulation','Theory'},'Location','northeast');
 

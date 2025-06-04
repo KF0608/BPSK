@@ -45,3 +45,9 @@ r = laprnd(1e5,1,0,1/sqrt(2));   % 单位方差
 figure; histogram(r,100,'Normalization','pdf'); hold on;
 x = -5:0.01:5; plot(x,1/sqrt(2)*exp(-sqrt(2)*abs(x)),'LineWidth',2);
 legend('Empirical','Theoretical'); title('Laplacian PDF');
+
+% --- CDF 验证 ---
+figure; cdfplot(r); hold on;
+cdf_theo = 0.5 + 0.5*sign(x).*(1-exp(-sqrt(2)*abs(x)));
+plot(x, cdf_theo,'r','LineWidth',2);
+legend('Empirical','Theoretical'); title('Laplacian CDF'); grid on;

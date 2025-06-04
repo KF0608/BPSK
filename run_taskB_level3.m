@@ -60,6 +60,24 @@ ber_ray_theo  = 0.5*( 1 - sqrt( EbN0_lin ./ (1+EbN0_lin) ) );
 % Rayleigh Outage：P_out = 1 - exp( - γ_th / Eb/N0 )
 outage_theo   = 1 - exp( - th_SNRlin ./ EbN0_lin );
 
+%% 2.1 Laplacian PDF & CDF 验证
+lap_samples = laprnd(1e5,1,0,1/sqrt(2));
+figure; histogram(lap_samples,100,'Normalization','pdf'); hold on;
+x = -5:0.01:5;
+plot(x,1/sqrt(2)*exp(-sqrt(2)*abs(x)),'r','LineWidth',1.5);
+title('Laplacian PDF Validation'); legend('Empirical','Theory'); grid on;
+
+figure; cdfplot(lap_samples); hold on;
+cdf_theo = 0.5 + 0.5*sign(x).*(1-exp(-sqrt(2)*abs(x)));
+plot(x,cdf_theo,'r','LineWidth',1.5);
+title('Laplacian CDF Validation'); legend('Empirical','Theory'); grid on;
+
+%% 2.2 误差百分比 (Sim vs Theory)
+err_awgn   = abs(ber_awgn-ber_awgn_theo)./ber_awgn_theo*100;
+err_lap    = abs(ber_lap-ber_lap_theo)./ber_lap_theo*100;
+err_ray    = abs(ber_ray-ber_ray_theo)./ber_ray_theo*100;
+err_outage = abs(outage_ray-outage_theo)./max(outage_theo,eps)*100;
+
 %% 3. 绘图
 
 % 3.1 BER 曲线
@@ -83,6 +101,9 @@ grid on; xlabel('E_b/N_0 (dB)');
 ylabel(['Outage P  ( \gamma_{th} = ' num2str(th_SNRdB) ' dB )']);
 title('Rayleigh Channel Outage Probability');
 legend({'Simulation','Theory'},'Location','northeast');
+
+fprintf('\nPercentage Error at %ddB: AWGN %.2f%%, Laplacian %.2f%%, Rayleigh %.2f%%, Outage %.2f%%\n',...
+        EbN0_dB(end), err_awgn(end), err_lap(end), err_ray(end), err_outage(end));
 
 disp('=== Level 3 simulation finished ===');
 

@@ -1,12 +1,5 @@
 # ELEC9123 Design Task B - BPSK Wireless Communication System Performance Analysis
 
-## Project Information
-- **Course**: ELEC9123 Digital Communications
-- **Task**: Design Task B - BPSK Performance Analysis
-- **Author**: [Your Name]
-- **Student ID**: [Your zID]
-- **Date**: 2025
-
 ## Overview
 This project implements comprehensive BPSK (Binary Phase Shift Keying) communication system performance analysis across multiple levels, from basic noise channel analysis to advanced fading scenarios with random deployment.
 
@@ -198,11 +191,6 @@ effective_snr = g_lin * |h|² / path_loss;  % Effective SNR
 4. MATLAB Documentation: Communications Toolbox User's Guide.
 5. ELEC9123 Course Materials and Lecture Notes, UNSW Sydney.
 
-## Contact Information
-- **Student**: [Your Name] ([Your zID]@student.unsw.edu.au)
-- **Course**: ELEC9123 Digital Communications
-- **Institution**: UNSW Sydney
-- **Submission Date**: 2025
 
 ## Project Declaration
 This project is completed strictly according to ELEC9123 course requirements. All code implementations are original, and theoretical analysis is based on course materials and academic literature.
